@@ -1,0 +1,411 @@
+swagger: '2.0'
+info:
+  title: AimMatic API
+  description: APIs for Natural Voice and placeNext
+  version: 1.0.0
+host: api.aimmatic.com
+schemes:
+  - https
+basePath: /v1
+securityDefinitions:
+  keyPair:
+    type: apiKey
+    in: header
+    name: X-Key-Pair
+produces:
+  - application/json
+paths:
+  /insights/GeometryImport:
+    post:
+      summary: Import vector geographical geometries
+      description: >
+        The POST operation to store the vector geometries of GeoJSON format on Place Next services.
+        The imported geometries will be used within our service such as map services and discovery services.
+        The imported Geometries data must be a 2D [standard GeoJSON](https://geojson.org/geojson-spec.html),
+        the altitude is currently not supported by our service at moments.
+      consumes:
+        - application/geo+json
+      produces:
+        - application/json
+      security:
+        - keyPair: []
+      parameters:
+        - in: body
+          name: body
+          description: >
+            A [geometry collection](https://geojson.org/geojson-spec.html#geometrycollection) standard format and
+            the request must specified content type as *application/geo+json*,
+          required: true
+          schema:
+            $ref: '#/definitions/GeometryCollection'
+      tags:
+        - Geometry Import
+      responses:
+        '200':
+          description: Geometries successfully imported
+          schema:
+            type: array
+            items:
+              description: Id of imported geometry
+              type: string
+        default:
+          description: More information please visit [error codes](/apis/error)
+          schema:
+            $ref: '#/definitions/Response'
+  /insights/categories:
+    get:
+      summary: Natural Voice Categories Summary
+      description: |
+        Returns Natural Voice Categories Summary given an optional start and end date
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      security:
+        - keyPair: []
+      parameters:
+        - in: query
+          name: audioId
+          type: string
+          description: The audio id
+        - in: query
+          name: start
+          type: integer
+          format: int64
+          description: Start date of query
+        - in: query
+          name: end
+          type: integer
+          format: int64
+          description: End date of query
+      tags:
+        - Insights Categories
+      responses:
+        '200':
+          description: Natural Voice Categories Summary
+          schema:
+            $ref: '#/definitions/CategoryResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do
+            not use the SDK and calculate the signature by yourself make sure to
+            follow our signature authentication calculation guide.
+        '403':
+          description: 'Forbidden, you don''t have permission to import the data.'
+        default:
+          description: Default category response
+          schema:
+            $ref: '#/definitions/CategoryResponse'
+  /insights/nss:
+    get:
+      summary: Retrieve NSS Score
+      description: Retrieve NSS Score, can optionally specifify a start and end date
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      security:
+        - keyPair: []
+      parameters:
+        - in: query
+          name: start
+          type: integer
+          format: int64
+          description: Start date of query
+        - in: query
+          name: end
+          type: integer
+          format: int64
+          description: End date of query
+        - in: query
+          name: audioId
+          type: string
+          description: The audio id
+      tags:
+        - NSS Score
+      responses:
+        '200':
+          description: NSS Score
+          schema:
+            $ref: '#/definitions/NSSResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do
+            not use the SDK and calculate the signature by yourself make sure to
+            follow our signature authentication calculation guide.
+        default:
+          description: NSS response
+          schema:
+            $ref: '#/definitions/NSSResponse'
+  /insights/ess:
+    get:
+      summary: Retrieve ESS Score
+      description: |
+        Retrieve ESS Score, can optionally provide a start and end date
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      security:
+        - keyPair: []
+      parameters:
+        - in: query
+          name: start
+          type: integer
+          format: int64
+          description: Start date of query
+        - in: query
+          name: end
+          type: integer
+          format: int64
+          description: End date of query
+        - in: query
+          name: saliencevalue
+          type: number
+          format: float
+          description: user salience value
+      tags:
+        - ESS Score
+      responses:
+        '200':
+          description: ESS Score
+          schema:
+            $ref: '#/definitions/ESSResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do
+            not use the SDK and calculate the signature by yourself make sure to
+            follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/ESSResponse'
+  /insights/text:
+    get:
+      summary: Retrieve Text
+      description: |
+        Retrieve transcripts and confidence values, optionally can provide a given start and end date range
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      security:
+        - keyPair: []
+      parameters:
+        - in: query
+          name: audioId
+          type: string
+          description: The audio id
+        - in: query
+          name: start
+          type: integer
+          format: int64
+          description: Start date of query
+        - in: query
+          name: end
+          type: integer
+          format: int64
+          description: End date of query
+      tags:
+        - TextDocument
+      responses:
+        '200':
+          description: TextDocument
+          schema:
+            $ref: '#/definitions/TextDocumentResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do
+            not use the SDK and calculate the signature by yourself make sure to
+            follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/TextDocumentResponse'
+definitions:
+  Geometry:
+    type: object
+    description: GeoJSon geometry
+    discriminator: type
+    required:
+      - type
+    externalDocs:
+      url: 'http://geojson.org/geojson-spec.html#geometry-objects'
+    properties:
+      type:
+        type: string
+        enum:
+          - Point
+          - Polygon
+        description: the geometry type
+  Point2D:
+    type: array
+    maxItems: 2
+    minItems: 2
+    items:
+      type: number
+  Point:
+    type: object
+    description: GeoJSon geometry
+    externalDocs:
+      url: 'http://geojson.org/geojson-spec.html#id2'
+    allOf:
+      - $ref: '#/definitions/Geometry'
+      - properties:
+          coordinates:
+            $ref: '#/definitions/Point2D'
+  Polygon:
+    type: object
+    description: GeoJSon geometry
+    externalDocs:
+      url: 'http://geojson.org/geojson-spec.html#id4'
+    allOf:
+      - $ref: '#/definitions/Geometry'
+      - properties:
+          coordinates:
+            type: array
+            items:
+              type: array
+              items:
+                $ref: '#/definitions/Point2D'
+  GeometryCollection:
+    type: object
+    description: GeoJSon geometry collection
+    required:
+      - type
+      - geometries
+    externalDocs:
+      url: 'http://geojson.org/geojson-spec.html#geometrycollection'
+    properties:
+      type:
+        type: string
+        enum:
+          - GeometryCollection
+      geometries:
+        type: array
+        items:
+          $ref: '#/definitions/Geometry'
+  Response:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: integer
+      message:
+        type: string
+      requestId:
+        type: string
+  Categories:
+    type: object
+    properties:
+      category:
+        type: array
+        items:
+          $ref: '#/definitions/Category'
+  Category:
+    type: object
+    properties:
+      confidence:
+        type: number
+        format: double
+      name:
+        type: string
+  CategoryResponse:
+    allOf:
+      - $ref: '#/definitions/BaseResponse'
+      - properties:
+          account:
+            $ref: '#/definitions/Account'
+          numtexts:
+            type: integer
+          records:
+            type: array
+            $ref: '#/definitions/Record'
+  Record:
+    type: object
+    properties:
+      confidence:
+        type: number
+        format: double
+      name:
+        type: string
+      textpercentage:
+        type: number
+        format: double
+  Account:
+    type: object
+    properties:
+      requestid:
+        type: string
+      accountid:
+        type: string
+      modifiedByAccountId:
+        type: string
+      userid:
+        type: string
+      apikey:
+        type: string
+      datecreated:
+        type: integer
+  BaseResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+  BooleanResponse:
+    allOf:
+      - $ref: '#/definitions/BaseResponse'
+      - properties:
+          value:
+            type: boolean
+  NSSResponse:
+    allOf:
+      - $ref: '#/definitions/BaseResponse'
+      - properties:
+          score:
+            type: integer
+  ESSResponse:
+      allOf:
+        - $ref: '#/definitions/BaseResponse'
+        - properties:
+            essData:
+              type: array
+              items:
+                $ref: '#/definitions/ESSData'
+  ESSData:
+    type: object
+    properties:
+      value:
+        type: number
+        format: float
+      name:
+        type: string
+  TextDocumentResponse:
+    allOf:
+      - $ref: '#/definitions/BaseResponse'
+      - properties:
+          transcriptData:
+            type: array
+            items:
+              $ref: '#/definitions/TranscriptData'
+  TranscriptData:
+      type: object
+      properties:
+        confidence:
+          type: number
+          format: float
+        transcript:
+          type: string
+        sentimentType:
+          $ref: '#/definitions/SentimentType'
+  SentimentType:
+    type: object
+    properties:
+      score:
+        type: number
+        format: float
+      magnitude:
+        type: number
+        format: float

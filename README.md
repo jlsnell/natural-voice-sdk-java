@@ -1,8 +1,8 @@
 AimMatic SDKs are easiest and best supported way for most developers to use AimMatic APIs.
 
-### Place Next SDK ###
+### Natural Voice SDK ###
 
-Place Next SDK is a client library to help developers quickly deploy applications with programmatic connections to Place Next Rest APIs.
+Natural Voice SDK is a client library to help developers quickly deploy applications with programmatic connections to Natural Voice APIs.
 
 ### Paired Key Connections ###
 

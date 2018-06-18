@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Categories
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-16T10:51:26.266-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-18T11:19:25.680-07:00")
 public class Categories {
   @SerializedName("category")
   private List<Category> category = null;

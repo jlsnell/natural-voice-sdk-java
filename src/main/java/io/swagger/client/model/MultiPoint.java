@@ -31,13 +31,8 @@ import java.util.List;
  * GeoJSon geometry
  */
 @ApiModel(description = "GeoJSon geometry")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-16T10:51:27.582-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-18T11:19:24.685-07:00")
 public class MultiPoint extends Geometry {
-
-  public MultiPoint() {
-    setType(TypeEnum.MULTIPOINT);
-  }
-
   @SerializedName("coordinates")
   private List<Point2D> coordinates = null;
 

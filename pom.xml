@@ -46,12 +46,12 @@
                 <version>2.2.3</version>
                 <executions>
                     <execution>
-                        <id>generate-api-1</id>
+                        <id>generate-api-2</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>src/main/resources/swagger.yaml</inputSpec>
+                            <inputSpec>src/main/resources/geometry_geojson.yaml</inputSpec>
                             <language>java</language>
                             <configOptions>
                                 <dateLibrary>java8</dateLibrary>
@@ -60,12 +60,12 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>generate-api-2</id>
+                        <id>generate-api</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>src/main/resources/geometry_geojson.yaml</inputSpec>
+                            <inputSpec>src/main/resources/swagger.yaml</inputSpec>
                             <language>java</language>
                             <configOptions>
                                 <dateLibrary>java8</dateLibrary>

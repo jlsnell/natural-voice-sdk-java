@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest {
 
     public void setup(ApiClient client) throws ApiException {
-        String apiKey = "eGECHbsN88zqNxUpKfXexzFJMLpW6A";
-        String secretKey = "KWMf9bsNMszqNxVhVEZxJ1RGVmlGUrPpUHxP9UfDAAGDsUPexPVA8Q";
+        String apiKey = "hS7HxAtwiag3ORXgalKfiA00gDFT9A";
+        String secretKey = "apjjUgtwKqg3ORVaWGQyVFJneHlMSAmIRkMtqEqfAAGE0RADH9HceA";
         try {
             RuntimeCredentialsProvider.setAimMaticCredentials(new AimMaticCredentials(apiKey, secretKey));
         } catch (InvalidKeyException e) {

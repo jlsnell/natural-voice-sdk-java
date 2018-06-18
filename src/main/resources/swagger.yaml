@@ -9,7 +9,7 @@ schemes:
 basePath: /v1
 securityDefinitions:
   keyPair:
-    type: apiKey
+    type: keyPair
     in: header
     name: X-Key-Pair
 produces:

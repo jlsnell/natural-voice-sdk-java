@@ -25,8 +25,8 @@ public class SignatureTest {
 
     @Test
     public void testSignature() throws IOException, InvalidKeyException {
-        String apiKey = "eGECHbsN88zqNxUpKfXexzFJMLpW6A";
-        String secretKey = "KWMf9bsNMszqNxVhVEZxJ1RGVmlGUrPpUHxP9UfDAAGDsUPexPVA8Q";
+        String apiKey = "bFCTMlL+UkmoHBWVdDcB6lyXJ/ftOw";
+        String secretKey = "dBqsN1L+E0moHBVxbEpRsXhBWGhLTudlEzTfqUggMJGLDzUpSeKomw";
         RuntimeCredentialsProvider.setAimMaticCredentials(new AimMaticCredentials(apiKey, secretKey));
         Signature s = new Signature();
         final Request[] newRequest = {null};

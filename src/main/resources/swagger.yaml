@@ -8,8 +8,12 @@ schemes:
   - https
 basePath: /v1
 securityDefinitions:
+  key:
+    type: apiKey
+    in: header
+    name: X-Key
   keyPair:
-    type: keyPair
+    type: apiKey
     in: header
     name: X-Key-Pair
 produces:

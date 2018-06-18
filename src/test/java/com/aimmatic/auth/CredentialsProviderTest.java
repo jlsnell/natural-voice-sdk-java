@@ -20,8 +20,8 @@ public class CredentialsProviderTest {
 
     @Test
     public void testCredentialsProvider() throws InvalidKeyException {
-        String apiKey = "eGECHbsN88zqNxUpKfXexzFJMLpW6A";
-        String secretKey = "KWMf9bsNMszqNxVhVEZxJ1RGVmlGUrPpUHxP9UfDAAGDsUPexPVA8Q";
+        String apiKey = "bFCTMlL+UkmoHBWVdDcB6lyXJ/ftOw";
+        String secretKey = "dBqsN1L+E0moHBVxbEpRsXhBWGhLTudlEzTfqUggMJGLDzUpSeKomw";
         byte[] secretKeyInByte = Base64.getDecoder().decode(secretKey);
         byte[] expectedByte = {116, 26, -84, 55, 82, -2, 19, 73, -88, 28, 21, 113, 108, 74, 81, -79, 120, 65, 88, 104, 75, 78, -25, 101, 19, 52, -33, -87, 72, 32, 48, -111, -117, 15, 53, 41, 73, -30, -88, -101};
         // test system properties

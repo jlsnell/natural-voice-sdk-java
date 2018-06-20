@@ -18,7 +18,8 @@ public class BaseTest {
         } catch (InvalidKeyException e) {
             throw new ApiException(e);
         }
-        String baseApiUrl = "http://api.aimmatic.info/v1";
+        //String baseApiUrl = "http://api.aimmatic.info/v1";
+        String baseApiUrl = "http://127.0.0.1:8080/v1";
         client.setDebugging(true);
         client.setBasePath(baseApiUrl);
         client.setConnectTimeout(6000);

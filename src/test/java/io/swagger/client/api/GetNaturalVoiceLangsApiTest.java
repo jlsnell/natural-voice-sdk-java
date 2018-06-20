@@ -14,7 +14,9 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.ApiResponse;
 import io.swagger.client.model.BaseResponse;
+import io.swagger.client.model.Lang;
 import io.swagger.client.model.LangsResponse;
 import org.junit.Test;
 import org.junit.Ignore;
@@ -46,7 +48,11 @@ public class GetNaturalVoiceLangsApiTest extends BaseTest {
         setup(api.getApiClient());
         LangsResponse response = api.insightsLangsGet();
 
-        System.err.println(response);
+        //ApiResponse<LangsResponse> response = api.insightsLangsGetWithHttpInfo();
+
+        //List<Lang> langs = response.getData().getLangs();
+
+        //System.err.println(response);
         // TODO: test validations
     }
     

@@ -19,6 +19,124 @@ securityDefinitions:
 produces:
   - application/json
 paths:
+  /insights/HasNLPResults/{audioId}:
+    get:
+      summary: Determines if we have NLP results for a supplied audio file
+      description: |
+        Determines if we have NLP results for a supplied audio file
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: audioId
+          required: true
+          type: string
+          description: The audio Id
+      security:
+        - keyPair: []
+      tags:
+        - Has NLP Results
+      responses:
+        '200':
+          description: BooleanResponse
+          schema:
+            $ref: '#/definitions/BooleanResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do
+            not use the SDK and calculate the signature by yourself make sure to
+            follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/BooleanResponse'
+
+  /insights/langs:
+    get:
+      summary: Return Supported Natural Voice Languages
+      description: |
+        Return Supported Natural Voice Languages including the full name and device or speech language name
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      security:
+        - keyPair: []
+      tags:
+        - GetNaturalVoiceLangs
+      responses:
+        '200':
+          description: Good response
+          schema:
+            $ref: '#/definitions/LangsResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do
+            not use the SDK and calculate the signature by yourself make sure to
+            follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
+  /insights/UploadAudio:
+    post:
+      summary: Uploads audio file for analysis
+      description: |
+        Uploads audio file for analysis
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      security:
+        - keyPair: []
+      parameters:
+        - in: formData
+          name: uploadFile
+          description: file to upload
+          required: true
+          type: file
+        - in: formData
+          name: deviceLanguage
+          type: string
+          description: Device language
+        - in: formData
+          name: confidence
+          type: number
+          format: float
+          description: (Optional) Minimum confidence level that should be accepted for creating transcript.
+        - in: formData
+          name: merge
+          type: string
+          description: (Optional). Can be "true" or "false" used to determine if all speech should be merged into single transcript
+        - in: formData
+          name: deviceLocation
+          type: string
+          description: Device Location, it's optional. it will be available as long as user's allow location permission for the application.
+        - in: formData
+          name: sampleRate
+          type: number
+          format: int32
+          description: Sample rate of audio file
+      tags:
+        - UploadAudio
+      responses:
+        '200':
+          description: Good response
+          schema:
+            $ref: '#/definitions/UploadAudioResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do
+            not use the SDK and calculate the signature by yourself make sure to
+            follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/BaseResponse'
+
   /insights/GeometryImport:
     post:
       summary: Import vector geographical geometries
@@ -299,21 +417,41 @@ definitions:
         type: string
       requestId:
         type: string
-  Categories:
+        
+  LangsResponse:
+      allOf:
+        - $ref: '#/definitions/BaseResponse'
+        - properties:
+            langs:
+              type: array
+              items:
+                $ref: '#/definitions/Lang'
+  Lang:
     type: object
     properties:
-      category:
-        type: array
-        items:
-          $ref: '#/definitions/Category'
-  Category:
-    type: object
-    properties:
-      confidence:
-        type: number
-        format: double
       name:
         type: string
+      fullname:
+        type: string
+      speechlang:
+        type: string
+      nlplang:
+        type: string
+  
+  UploadAudioResponse:
+    type: object
+    properties:
+      status:
+        $ref: '#/definitions/BaseResponse'
+      data:
+        type: object
+        properties:
+          audioid:
+            type: string
+          confidence:
+            type: number
+            format: float
+
   CategoryResponse:
     allOf:
       - $ref: '#/definitions/BaseResponse'

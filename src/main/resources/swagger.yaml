@@ -79,7 +79,7 @@ paths:
         default:
           description: Default response
           schema:
-            $ref: '#/definitions/BaseResponse'
+            $ref: '#/definitions/LangsResponse'
 
   /insights/UploadAudio:
     post:
@@ -417,12 +417,11 @@ definitions:
         type: string
       requestId:
         type: string
-        
   LangsResponse:
       allOf:
         - $ref: '#/definitions/BaseResponse'
         - properties:
-            langs:
+            lang:
               type: array
               items:
                 $ref: '#/definitions/Lang'

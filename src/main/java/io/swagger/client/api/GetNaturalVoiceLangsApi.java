@@ -27,7 +27,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import io.swagger.client.model.BaseResponse;
 import io.swagger.client.model.LangsResponse;
 
 import java.lang.reflect.Type;

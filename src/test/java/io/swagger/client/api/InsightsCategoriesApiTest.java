@@ -19,6 +19,8 @@ import io.swagger.client.model.CategoryResponse;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.GregorianCalendar;
+
 /**
  * API tests for InsightsCategoriesApi
  */
@@ -37,9 +39,9 @@ public class InsightsCategoriesApiTest extends BaseTest {
     @Test
     public void insightsCategoriesGetTest() throws ApiException {
         setup(api.getApiClient());
-        String audioId = null;
-        Long start = null;
-        Long end = null;
+        Long start = new GregorianCalendar(2018, 1, 1).getTimeInMillis();
+        Long end = System.currentTimeMillis();
+        String audioId = "L8Ak34fVavwsLxX4l9w";
         ApiResponse<CategoryResponse> res = api.insightsCategoriesGetWithHttpInfo(audioId, start, end);
         Assert.assertEquals("status", 200, res.getStatusCode());
         // TODO: test validations

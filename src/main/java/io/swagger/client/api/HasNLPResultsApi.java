@@ -55,18 +55,18 @@ public class HasNLPResultsApi {
     }
 
     /**
-     * Build call for insightsHasNLPResultsAudioIdGet
+     * Build call for insightsHasnlpresultsAudioIdGet
      * @param audioId The audio Id (required)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call insightsHasNLPResultsAudioIdGetCall(String audioId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call insightsHasnlpresultsAudioIdGetCall(String audioId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
-        String localVarPath = "/insights/HasNLPResults/{audioId}"
+        String localVarPath = "/insights/hasnlpresults/{audioId}"
             .replaceAll("\\{" + "audioId" + "\\}", apiClient.escapeString(audioId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -104,15 +104,15 @@ public class HasNLPResultsApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call insightsHasNLPResultsAudioIdGetValidateBeforeCall(String audioId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call insightsHasnlpresultsAudioIdGetValidateBeforeCall(String audioId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'audioId' is set
         if (audioId == null) {
-            throw new ApiException("Missing the required parameter 'audioId' when calling insightsHasNLPResultsAudioIdGet(Async)");
+            throw new ApiException("Missing the required parameter 'audioId' when calling insightsHasnlpresultsAudioIdGet(Async)");
         }
         
         
-        com.squareup.okhttp.Call call = insightsHasNLPResultsAudioIdGetCall(audioId, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = insightsHasnlpresultsAudioIdGetCall(audioId, progressListener, progressRequestListener);
         return call;
 
         
@@ -128,8 +128,8 @@ public class HasNLPResultsApi {
      * @return BooleanResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public BooleanResponse insightsHasNLPResultsAudioIdGet(String audioId) throws ApiException {
-        ApiResponse<BooleanResponse> resp = insightsHasNLPResultsAudioIdGetWithHttpInfo(audioId);
+    public BooleanResponse insightsHasnlpresultsAudioIdGet(String audioId) throws ApiException {
+        ApiResponse<BooleanResponse> resp = insightsHasnlpresultsAudioIdGetWithHttpInfo(audioId);
         return resp.getData();
     }
 
@@ -140,8 +140,8 @@ public class HasNLPResultsApi {
      * @return ApiResponse&lt;BooleanResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<BooleanResponse> insightsHasNLPResultsAudioIdGetWithHttpInfo(String audioId) throws ApiException {
-        com.squareup.okhttp.Call call = insightsHasNLPResultsAudioIdGetValidateBeforeCall(audioId, null, null);
+    public ApiResponse<BooleanResponse> insightsHasnlpresultsAudioIdGetWithHttpInfo(String audioId) throws ApiException {
+        com.squareup.okhttp.Call call = insightsHasnlpresultsAudioIdGetValidateBeforeCall(audioId, null, null);
         Type localVarReturnType = new TypeToken<BooleanResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -154,7 +154,7 @@ public class HasNLPResultsApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call insightsHasNLPResultsAudioIdGetAsync(String audioId, final ApiCallback<BooleanResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call insightsHasnlpresultsAudioIdGetAsync(String audioId, final ApiCallback<BooleanResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -175,7 +175,7 @@ public class HasNLPResultsApi {
             };
         }
 
-        com.squareup.okhttp.Call call = insightsHasNLPResultsAudioIdGetValidateBeforeCall(audioId, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = insightsHasnlpresultsAudioIdGetValidateBeforeCall(audioId, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<BooleanResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

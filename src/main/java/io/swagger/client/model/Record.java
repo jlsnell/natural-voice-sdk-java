@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * Record
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-20T13:06:58.719-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-21T11:47:27.340-07:00")
 public class Record {
   @SerializedName("confidence")
   private Double confidence = null;

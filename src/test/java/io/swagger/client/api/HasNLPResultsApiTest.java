@@ -14,11 +14,14 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.ApiResponse;
 import io.swagger.client.model.BooleanResponse;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Ignore;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,10 +46,10 @@ public class HasNLPResultsApiTest extends BaseTest {
     @Test
     public void insightsHasNLPResultsAudioIdGetTest() throws ApiException {
         setup(api.getApiClient());
-        String audioId = null;
-        BooleanResponse response = api.insightsHasNLPResultsAudioIdGet(audioId);
+        String audioId = "L8Ak34fVavwsLxX4l9w";
+        ApiResponse<BooleanResponse> res = api.insightsHasnlpresultsAudioIdGetWithHttpInfo(audioId);
 
-        // TODO: test validations
+        Assert.assertEquals("status", 200, res.getStatusCode());
     }
     
 }

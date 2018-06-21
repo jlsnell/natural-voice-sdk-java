@@ -18,6 +18,7 @@ import io.swagger.client.model.BaseResponse;
 import java.math.BigDecimal;
 import java.io.File;
 import io.swagger.client.model.UploadAudioResponse;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Ignore;
 
@@ -52,9 +53,10 @@ public class UploadAudioApiTest extends BaseTest {
         String merge = null;
         String deviceLocation = null;
         BigDecimal sampleRate = null;
-        UploadAudioResponse response = api.insightsUploadAudioPost(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate);
+        UploadAudioResponse res = api.insightsUploadAudioPost(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate);
 
         // TODO: test validations
+        //Assert.assertEquals("status", 200, res.getStatusCode());
     }
     
 }

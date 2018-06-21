@@ -19,7 +19,7 @@ securityDefinitions:
 produces:
   - application/json
 paths:
-  /insights/HasNLPResults/{audioId}:
+  /insights/hasnlpresults/{audioId}:
     get:
       summary: Determines if we have NLP results for a supplied audio file
       description: |

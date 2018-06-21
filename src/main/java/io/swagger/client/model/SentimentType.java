@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * SentimentType
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-21T11:47:27.340-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-21T12:12:43.391-07:00")
 public class SentimentType {
   @SerializedName("score")
   private Float score = null;

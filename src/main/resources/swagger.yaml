@@ -109,7 +109,7 @@ paths:
           description: (Optional) Minimum confidence level that should be accepted for creating transcript.
         - in: formData
           name: merge
-          type: string
+          type: boolean
           description: (Optional). Can be "true" or "false" used to determine if all speech should be merged into single transcript
         - in: formData
           name: deviceLocation
@@ -117,8 +117,8 @@ paths:
           description: Device Location, it's optional. it will be available as long as user's allow location permission for the application.
         - in: formData
           name: sampleRate
-          type: number
-          format: int32
+          type: integer
+          format: int64
           description: Sample rate of audio file
       tags:
         - UploadAudio

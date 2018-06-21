@@ -47,12 +47,12 @@ public class UploadAudioApiTest extends BaseTest {
     @Test
     public void insightsUploadAudioPostTest() throws ApiException {
         setup(api.getApiClient());
-        File uploadFile = null;
-        String deviceLanguage = null;
-        Float confidence = null;
-        String merge = null;
+        File uploadFile = new File("/Users/novotny/aimmatic/src/bitbucket.org/placenext/places-api/speech/outfile.wav");
+        String deviceLanguage = "en_US";
+        Float confidence = 0.84f;
+        boolean merge = false;
         String deviceLocation = null;
-        BigDecimal sampleRate = null;
+        Long sampleRate = 44100L;
         UploadAudioResponse res = api.insightsUploadAudioPost(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate);
 
         // TODO: test validations

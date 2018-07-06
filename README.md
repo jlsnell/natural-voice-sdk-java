@@ -24,9 +24,9 @@ The recommended way to use the AimMatic SDK for Java in your project is to consu
 
 ```maven
 <dependency>
-  <groupId>com.aimmatic</groupId>
-  <artifactId>aimmatic</artifactId>
-  <version>1.0</version>
+  <groupId>com.aimmatic.natural</groupId>
+  <artifactId>natural-voice-sdk-java</artifactId>
+  <version>1.0.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -34,7 +34,7 @@ The recommended way to use the AimMatic SDK for Java in your project is to consu
 **Using the SDK Gradle modules**
 
 ```gradle
-compile 'com.aimmatic:aimmatic:1.0'
+compile 'com.aimmatic.natural:natural-voice-sdk-java:1.0.0'
 ```
 
 ### Key Pair Lookup ###

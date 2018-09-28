@@ -64,12 +64,13 @@ public class UploadAudioApi {
      * @param merge (Optional). Can be \&quot;true\&quot; or \&quot;false\&quot; used to determine if all speech should be merged into single transcript (optional)
      * @param deviceLocation Device Location, it&#39;s optional. it will be available as long as user&#39;s allow location permission for the application. (optional)
      * @param sampleRate Sample rate of audio file (optional)
+     * @param ruleTrimEnd (Optional) if specified the rule value indicates a % * 1.5 to truncate the audio file, e.g. 1 will use 98.5% of original audio file, 2 &#x3D; 3%, etc. (optional)
      * @param progressListener Progress listener
      * @param progressRequestListener Progress request listener
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call insightsUploadAudioPostCall(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call insightsUploadAudioPostCall(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate, Integer ruleTrimEnd, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -92,6 +93,8 @@ public class UploadAudioApi {
         localVarFormParams.put("deviceLocation", deviceLocation);
         if (sampleRate != null)
         localVarFormParams.put("sampleRate", sampleRate);
+        if (ruleTrimEnd != null)
+        localVarFormParams.put("ruleTrimEnd", ruleTrimEnd);
 
         final String[] localVarAccepts = {
             "application/json"
@@ -122,7 +125,7 @@ public class UploadAudioApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call insightsUploadAudioPostValidateBeforeCall(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call insightsUploadAudioPostValidateBeforeCall(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate, Integer ruleTrimEnd, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'uploadFile' is set
         if (uploadFile == null) {
@@ -130,7 +133,7 @@ public class UploadAudioApi {
         }
         
         
-        com.squareup.okhttp.Call call = insightsUploadAudioPostCall(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = insightsUploadAudioPostCall(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd, progressListener, progressRequestListener);
         return call;
 
         
@@ -148,11 +151,12 @@ public class UploadAudioApi {
      * @param merge (Optional). Can be \&quot;true\&quot; or \&quot;false\&quot; used to determine if all speech should be merged into single transcript (optional)
      * @param deviceLocation Device Location, it&#39;s optional. it will be available as long as user&#39;s allow location permission for the application. (optional)
      * @param sampleRate Sample rate of audio file (optional)
+     * @param ruleTrimEnd (Optional) if specified the rule value indicates a % * 1.5 to truncate the audio file, e.g. 1 will use 98.5% of original audio file, 2 &#x3D; 3%, etc. (optional)
      * @return UploadAudioResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public UploadAudioResponse insightsUploadAudioPost(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate) throws ApiException {
-        ApiResponse<UploadAudioResponse> resp = insightsUploadAudioPostWithHttpInfo(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate);
+    public UploadAudioResponse insightsUploadAudioPost(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate, Integer ruleTrimEnd) throws ApiException {
+        ApiResponse<UploadAudioResponse> resp = insightsUploadAudioPostWithHttpInfo(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd);
         return resp.getData();
     }
 
@@ -165,11 +169,12 @@ public class UploadAudioApi {
      * @param merge (Optional). Can be \&quot;true\&quot; or \&quot;false\&quot; used to determine if all speech should be merged into single transcript (optional)
      * @param deviceLocation Device Location, it&#39;s optional. it will be available as long as user&#39;s allow location permission for the application. (optional)
      * @param sampleRate Sample rate of audio file (optional)
+     * @param ruleTrimEnd (Optional) if specified the rule value indicates a % * 1.5 to truncate the audio file, e.g. 1 will use 98.5% of original audio file, 2 &#x3D; 3%, etc. (optional)
      * @return ApiResponse&lt;UploadAudioResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<UploadAudioResponse> insightsUploadAudioPostWithHttpInfo(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate) throws ApiException {
-        com.squareup.okhttp.Call call = insightsUploadAudioPostValidateBeforeCall(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, null, null);
+    public ApiResponse<UploadAudioResponse> insightsUploadAudioPostWithHttpInfo(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate, Integer ruleTrimEnd) throws ApiException {
+        com.squareup.okhttp.Call call = insightsUploadAudioPostValidateBeforeCall(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd, null, null);
         Type localVarReturnType = new TypeToken<UploadAudioResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -183,11 +188,12 @@ public class UploadAudioApi {
      * @param merge (Optional). Can be \&quot;true\&quot; or \&quot;false\&quot; used to determine if all speech should be merged into single transcript (optional)
      * @param deviceLocation Device Location, it&#39;s optional. it will be available as long as user&#39;s allow location permission for the application. (optional)
      * @param sampleRate Sample rate of audio file (optional)
+     * @param ruleTrimEnd (Optional) if specified the rule value indicates a % * 1.5 to truncate the audio file, e.g. 1 will use 98.5% of original audio file, 2 &#x3D; 3%, etc. (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call insightsUploadAudioPostAsync(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate, final ApiCallback<UploadAudioResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call insightsUploadAudioPostAsync(File uploadFile, String deviceLanguage, Float confidence, Boolean merge, String deviceLocation, Long sampleRate, Integer ruleTrimEnd, final ApiCallback<UploadAudioResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -208,7 +214,7 @@ public class UploadAudioApi {
             };
         }
 
-        com.squareup.okhttp.Call call = insightsUploadAudioPostValidateBeforeCall(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = insightsUploadAudioPostValidateBeforeCall(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<UploadAudioResponse>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

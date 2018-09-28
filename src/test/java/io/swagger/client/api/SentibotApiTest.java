@@ -15,40 +15,42 @@ package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
 import io.swagger.client.ApiResponse;
-import io.swagger.client.model.BooleanResponse;
+import io.swagger.client.model.SentibotResponse;
+import io.swagger.client.model.TextDocumentResponse;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Ignore;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * API tests for HasNLPResultsApi
+ * API tests for SentibotApi
  */
 @Ignore
-public class HasNLPResultsApiTest extends BaseTest {
+public class SentibotApiTest extends BaseTest {
 
-    private final HasNLPResultsApi api = new HasNLPResultsApi();
+    private final SentibotApi api = new SentibotApi();
+
     
     /**
-     * Determines if we have NLP results for a supplied audio file
+     * Sentiment analysis
      *
-     * Determines if we have NLP results for a supplied audio file 
+     * Returns the sentiment analysis for a supplied audio id 
      *
      * @throws ApiException
      *          if the Api call fails
      */
     @Test
-    public void insightsHasNLPResultsAudioIdGetTest() throws ApiException {
+    public void insightsSentibotGetTest() throws ApiException {
         setup(api.getApiClient());
-        String audioId = getAudioId();
-        ApiResponse<BooleanResponse> res = api.insightsHasnlpresultsAudioIdGetWithHttpInfo(audioId);
 
+        ApiResponse<SentibotResponse> res = api.insightsSentibotGetWithHttpInfo(getAudioId());
         Assert.assertEquals("status", 200, res.getStatusCode());
+        SentibotResponse body = res.getData();
+
     }
     
 }

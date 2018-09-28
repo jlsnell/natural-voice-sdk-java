@@ -14,18 +14,12 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
-import io.swagger.client.model.BaseResponse;
-import java.math.BigDecimal;
-import java.io.File;
 import io.swagger.client.model.UploadAudioResponse;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
 
 /**
  * API tests for UploadAudioApi
@@ -47,16 +41,20 @@ public class UploadAudioApiTest extends BaseTest {
     @Test
     public void insightsUploadAudioPostTest() throws ApiException {
         setup(api.getApiClient());
-        File uploadFile = new File("/Users/novotny/aimmatic/src/bitbucket.org/placenext/places-api/speech/outfile.wav");
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        File uploadFile = new File(classLoader.getResource("outfile.wav").getFile());
+
         String deviceLanguage = "en_US";
         Float confidence = 0.84f;
         boolean merge = false;
         String deviceLocation = null;
         Long sampleRate = 44100L;
-        UploadAudioResponse res = api.insightsUploadAudioPost(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate);
+        Integer ruleTrimEnd = null;
+        UploadAudioResponse res = api.insightsUploadAudioPost(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd);
 
         // TODO: test validations
-        //Assert.assertEquals("status", 200, res.getStatusCode());
+        Assert.assertEquals("status", 200, res.getStatus().getCode().intValue());
     }
     
 }

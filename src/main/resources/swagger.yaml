@@ -120,6 +120,11 @@ paths:
           type: integer
           format: int64
           description: Sample rate of audio file
+        - in: formData
+          name: ruleTrimEnd
+          type: integer
+          format: int32
+          description: (Optional) if specified the rule value indicates a % * 1.5 to truncate the audio file, e.g. 1 will use 98.5% of original audio file, 2 = 3%, etc.
       tags:
         - UploadAudio
       responses:
@@ -174,6 +179,107 @@ paths:
           description: More information please visit [error codes](/apis/error)
           schema:
             $ref: '#/definitions/Response'
+  /insights/sentibot:
+        get:
+          summary: Sentiment analysis
+          description: |
+            Returns the sentiment analysis for a supplied audio id
+          consumes:
+            - application/json
+          produces:
+            - application/json
+          tags:
+            - Sentibot
+          parameters:
+            - in: path
+              name: audioId
+              required: true
+              schema:
+              type: string
+              description: the audio id representing the audio to be analyzed
+          responses:
+            '200':
+              description: Good response
+              schema:
+                $ref: '#/definitions/SentibotResponse'
+            '401':
+              description: >-
+                Unauthorized, you have an invalid apikey or secret key. If you do
+                not use the SDK and calculate the signature by yourself make sure to
+                follow our signature authentication calculation guide.
+            default:
+              description: Default response
+              schema:
+                $ref: '#/definitions/SentibotResponse'
+  /insights/NLPResults:
+      get:
+        summary: Query Natural Voice for text analysis results
+        description: |
+          Developers use the NLPResults API to query Natural Voice to retrieve document sentiment, named entities, and syntax analysis after natural language processing (NLP). Optionally can provide a start and end date range to retrieve the results from a corpus of Natural Voice sessions.
+        produces:
+          - application/json
+        parameters:
+          - in: query
+            name: audioId
+            type: string
+            description: (required, except when start and end params are provided) String, the audioId for a Natural Voice session, returned by UploadAudio API
+          - in: query
+            name: start
+            type: integer
+            format: int64
+            description: (optional) UTC start time in millisecond, must not include audio ID
+          - in: query
+            name: end
+            type: integer
+            format: int64
+            description: (optional) UTC end time in millisecond, must not include audio ID
+        tags:
+          - NLP Results
+        responses:
+          '200':
+            description: NLPDocumentResponse
+            schema:
+              $ref: '#/definitions/NLPDocumentResponse'
+          '401':
+            description: >-
+              Unauthorized, you have an invalid apikey or secret key. If you do
+              not use the SDK and calculate the signature by yourself make sure to
+              follow our signature authentication calculation guide.
+  /insights/UploadTranscript:
+      post:
+        summary: Upload transcripts to Natural Voice
+        description: |
+          Developers use the Upload Transcript API to upload transcripts to Natural Voice for automated text analysis by natural language processing (NLP).
+        consumes:
+          - multipart/form-data
+        produces:
+          - application/json
+        parameters:
+          - in: formData
+            name: transcript
+            description: (required) String, text for natural language processing
+            required: true
+            type: string
+          - in: formData
+            name: deviceLanguage
+            type: string
+            description: String, BCP-47 identifier, language code parameter for speech-to-text recognition, for best results use speechLang value defined by user, use device language only if speechLang is not available from the user
+        tags:
+          - Upload Transcript
+        responses:
+          '200':
+            description: Good response
+            schema:
+              $ref: '#/definitions/TranscriptResponse'
+          '401':
+            description: >-
+              Unauthorized, you have an invalid apikey or secret key. If you do
+              not use the SDK and calculate the signature by yourself make sure to
+              follow our signature authentication calculation guide.
+          default:
+            description: Default response
+            schema:
+              $ref: '#/definitions/TranscriptResponse'
   /insights/categories:
     get:
       summary: Natural Voice Categories Summary
@@ -523,6 +629,28 @@ definitions:
         format: float
       name:
         type: string
+  SentibotResponse:
+        allOf:
+          - $ref: '#/definitions/BaseResponse'
+          - properties:
+              sentibotData:
+                type: array
+                items:
+                  $ref: '#/definitions/SentibotData'
+  SentibotData:
+      type: object
+      properties:
+        value:
+          type: boolean
+        name:
+          type: string
+  TranscriptResponse:
+      allOf:
+        - $ref: '#/definitions/BaseResponse'
+        - properties:
+            transcriptId:
+              type: string
+              description: the transcriptId for a Natural Voice session
   TextDocumentResponse:
     allOf:
       - $ref: '#/definitions/BaseResponse'
@@ -531,6 +659,29 @@ definitions:
             type: array
             items:
               $ref: '#/definitions/TranscriptData'
+  NLPDocumentResponse:
+      allOf:
+        - $ref: '#/definitions/BaseResponse'
+        - properties:
+            NLPData:
+              type: array
+              items:
+                $ref: '#/definitions/NLPData'
+  NLPData:
+      type: object
+      properties:
+        audioId:
+          type: string
+        sentiment:
+          type: AnalyzeSentimentResponse
+          description: https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeSentimentResponse
+        syntax:
+          type: AnalyzeSyntaxResponse
+          description: https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeSyntaxResponse
+        entities:
+          type: AnalyzeEntitiesResponse
+          description: https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeEntitiesResponse
+
   TranscriptData:
       type: object
       properties:

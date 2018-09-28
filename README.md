@@ -69,4 +69,7 @@ The Authentication will lookup from option 1 to option 3. If it finds the creden
  1. Point.java or Polygon.java (see https://github.com/OAI/OpenAPI-Specification/issues/1313)
  2. Confugration.java as we need to enable custom verification as well as an issue going (see https://github.com/swagger-api/swagger-codegen/issues/5187)
 
+### Running the tests ###
 
+Tests are found for all APIs in the test folder. Please edit BaseTest.java as needed since it contains the 
+ API server, key settings and other parameters that need tweaking.

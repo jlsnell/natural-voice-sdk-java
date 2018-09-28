@@ -10,6 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
+    public String getAudioId() {
+        return "L8Ak34fVavwsLxX4l9w";
+    }
+
     public void setup(ApiClient client) throws ApiException {
         String apiKey = "hS7HxAtwiag3ORXgalKfiA00gDFT9A";
         String secretKey = "apjjUgtwKqg3ORVaWGQyVFJneHlMSAmIRkMtqEqfAAGE0RADH9HceA";

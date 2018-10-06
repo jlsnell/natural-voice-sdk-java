@@ -14,6 +14,7 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.ApiResponse;
 import io.swagger.client.model.NLPDocumentResponse;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +28,7 @@ import java.util.Map;
 /**
  * API tests for NLPResultsApi
  */
-@Ignore
+
 public class NLPResultsApiTest extends BaseTest {
 
     private final NLPResultsApi api = new NLPResultsApi();
@@ -45,9 +46,13 @@ public class NLPResultsApiTest extends BaseTest {
         setup(api.getApiClient());
         Long start = null;
         Long end = null;
-        NLPDocumentResponse res = api.insightsNLPResultsGet(getAudioId(), start, end);
+        /*NLPDocumentResponse res = api.insightsNLPResultsGet(getAudioId(), start, end);
 
-        Assert.assertEquals("status", 200, res.getCode().intValue());
+        Assert.assertEquals("status", 200, res.getCode().intValue());*/
+
+        ApiResponse<NLPDocumentResponse> res = api.insightsNLPResultsGetWithHttpInfo(getAudioId(), start, end);
+        Assert.assertEquals("status", 200, res.getStatusCode());
+        NLPDocumentResponse body = res.getData();
     }
     
 }

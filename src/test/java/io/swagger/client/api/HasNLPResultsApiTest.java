@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * API tests for HasNLPResultsApi
  */
-@Ignore
+
 public class HasNLPResultsApiTest extends BaseTest {
 
     private final HasNLPResultsApi api = new HasNLPResultsApi();

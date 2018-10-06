@@ -66,13 +66,12 @@ public class InsightsCategoriesApi {
      */
     public com.squareup.okhttp.Call insightsCategoriesGetCall(String audioId, Long start, Long end, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/insights/categories";
+        String localVarPath = "/insights/categories/{audioId}"
+                .replaceAll("\\{" + "audioId" + "\\}", apiClient.escapeString(audioId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        if (audioId != null)
-        localVarQueryParams.addAll(apiClient.parameterToPairs("", "audioId", audioId));
         if (start != null)
         localVarQueryParams.addAll(apiClient.parameterToPairs("", "start", start));
         if (end != null)

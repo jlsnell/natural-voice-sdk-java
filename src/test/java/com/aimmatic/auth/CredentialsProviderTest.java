@@ -12,7 +12,7 @@ import java.util.Base64;
 /**
  * Created by veasna on 4/10/18.
  */
-@Ignore
+
 public class CredentialsProviderTest {
 
     @Rule

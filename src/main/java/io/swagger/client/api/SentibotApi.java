@@ -64,10 +64,10 @@ public class SentibotApi {
      */
     public com.squareup.okhttp.Call insightsSentibotGetCall(String audioId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/insights/sentibot"
-            .replaceAll("\\{" + "audioId" + "\\}", apiClient.escapeString(audioId.toString()));
+        String localVarPath = "/insights/sentibot/{audioId}"
+                .replaceAll("\\{" + "audioId" + "\\}", apiClient.escapeString(audioId.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 

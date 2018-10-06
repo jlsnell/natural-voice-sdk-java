@@ -29,7 +29,7 @@ import java.util.Map;
 /**
  * API tests for SentibotApi
  */
-@Ignore
+
 public class SentibotApiTest extends BaseTest {
 
     private final SentibotApi api = new SentibotApi();

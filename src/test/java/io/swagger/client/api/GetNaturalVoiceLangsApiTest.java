@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * API tests for GetNaturalVoiceLangsApi
  */
-@Ignore
+
 public class GetNaturalVoiceLangsApiTest extends BaseTest {
 
     private final GetNaturalVoiceLangsApi api = new GetNaturalVoiceLangsApi();

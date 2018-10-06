@@ -14,6 +14,8 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.model.NLPDocumentResponse;
+import io.swagger.client.ApiResponse;
 import io.swagger.client.model.TranscriptResponse;
 import org.junit.Assert;
 import org.junit.Test;
@@ -27,7 +29,7 @@ import java.util.Map;
 /**
  * API tests for UploadTranscriptApi
  */
-@Ignore
+
 public class UploadTranscriptApiTest extends BaseTest {
 
     private final UploadTranscriptApi api = new UploadTranscriptApi();
@@ -43,11 +45,15 @@ public class UploadTranscriptApiTest extends BaseTest {
     @Test
     public void insightsUploadTranscriptPostTest() throws ApiException {
         setup(api.getApiClient());
-        String transcript = null;
+        String transcript = "this is a test of the nlp processing it is a good great happy good test";
         String deviceLanguage = null;
-        TranscriptResponse res = api.insightsUploadTranscriptPost(transcript, deviceLanguage);
+        /*TranscriptResponse res = api.insightsUploadTranscriptPost(transcript, deviceLanguage);
 
-        Assert.assertEquals("status", 200, res.getCode().intValue());
+        Assert.assertEquals("status", 200, res.getCode().intValue());*/
+
+        ApiResponse<TranscriptResponse> res = api.insightsUploadTranscriptPostWithHttpInfo(transcript, deviceLanguage);
+        Assert.assertEquals("status", 200, res.getStatusCode());
+        TranscriptResponse body = res.getData();
     }
     
 }

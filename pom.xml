@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.aimmatic</groupId>
-    <artifactId>aimmatic</artifactId>
+    <groupId>com.aimmatic.natural</groupId>
+    <artifactId>natural-voice-sdk-java</artifactId>
     <version>1.0.0</version>
 
     <build>
@@ -81,9 +81,9 @@
 
     <distributionManagement>
         <repository>
-            <id>bintray-aimmatic-aimmatic</id>
-            <name>aimmatic-aimmatic</name>
-            <url>https://api.bintray.com/maven/aimmatic/aimmatic/com.aimmatic/;publish=1</url>
+            <id>bintray-aimmatic-natural-voice</id>
+            <name>aimmatic-natural-voice</name>
+            <url>https://api.bintray.com/maven/aimmatic/natural-voice/com.aimmatic.natural.java/;publish=1</url>
         </repository>
     </distributionManagement>
 

@@ -14,6 +14,7 @@
 package io.swagger.client.api;
 
 import io.swagger.client.ApiException;
+import io.swagger.client.ApiResponse;
 import io.swagger.client.model.UploadAudioResponse;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -24,7 +25,7 @@ import java.io.File;
 /**
  * API tests for UploadAudioApi
  */
-@Ignore
+
 public class UploadAudioApiTest extends BaseTest {
 
     private final UploadAudioApi api = new UploadAudioApi();
@@ -43,18 +44,25 @@ public class UploadAudioApiTest extends BaseTest {
         setup(api.getApiClient());
 
         ClassLoader classLoader = getClass().getClassLoader();
-        File uploadFile = new File(classLoader.getResource("outfile.wav").getFile());
+        File uploadFile = new File(classLoader.getResource("audio1.wav").getFile());
 
-        String deviceLanguage = "en_US";
+        /*String deviceLanguage = "en_US";
         Float confidence = 0.84f;
         boolean merge = false;
         String deviceLocation = null;
         Long sampleRate = 44100L;
-        Integer ruleTrimEnd = null;
-        UploadAudioResponse res = api.insightsUploadAudioPost(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd);
+        Integer ruleTrimEnd = null;*/
 
-        // TODO: test validations
-        Assert.assertEquals("status", 200, res.getStatus().getCode().intValue());
+        String deviceLanguage = null;
+        Float confidence = null;
+        boolean merge = false;
+        String deviceLocation = null;
+        Long sampleRate = null;
+        Integer ruleTrimEnd = null;
+
+        ApiResponse<UploadAudioResponse> res = api.insightsUploadAudioPostWithHttpInfo(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd);
+        Assert.assertEquals("status", 200, res.getStatusCode());
+        UploadAudioResponse body = res.getData();
     }
     
 }

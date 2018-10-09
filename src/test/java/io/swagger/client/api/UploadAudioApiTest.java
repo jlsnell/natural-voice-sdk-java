@@ -44,7 +44,7 @@ public class UploadAudioApiTest extends BaseTest {
         setup(api.getApiClient());
 
         ClassLoader classLoader = getClass().getClassLoader();
-        File uploadFile = new File(classLoader.getResource("audio1.wav").getFile());
+        File uploadFile = new File(classLoader.getResource("outfile.wav").getFile());
 
         /*String deviceLanguage = "en_US";
         Float confidence = 0.84f;

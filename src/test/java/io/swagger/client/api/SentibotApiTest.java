@@ -47,7 +47,7 @@ public class SentibotApiTest extends BaseTest {
     public void insightsSentibotGetTest() throws ApiException {
         setup(api.getApiClient());
 
-        ApiResponse<SentibotResponse> res = api.insightsSentibotGetWithHttpInfo(getAudioId());
+        ApiResponse<SentibotResponse> res = api.insightsSentibotAudioIdGetWithHttpInfo(getAudioId());
         Assert.assertEquals("status", 200, res.getStatusCode());
         SentibotResponse body = res.getData();
 

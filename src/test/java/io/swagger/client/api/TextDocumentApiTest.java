@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
  */
 public class TextDocumentApiTest extends BaseTest {
 
-    private final TextDocumentApi api = new TextDocumentApi();
+    private final TextApi api = new TextApi();
 
     /**
      * Retrieve Text

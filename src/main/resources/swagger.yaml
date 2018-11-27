@@ -1,43 +1,258 @@
 swagger: '2.0'
 info:
-  title: AimMatic API
-  description: APIs for Natural Voice and placeNext
-  version: 1.0.0
+  title: Natural Voice SDK
+  description: Natural Voice SDKs are easiest and best supported way for most developers to quickly build and iterate Natural Voice applications that integrate with our services programmatically.
+  version: 1.2.0
 host: api.aimmatic.com
 schemes:
-  - https
+- https
 basePath: /v1
-securityDefinitions:
-  key:
-    type: apiKey
-    in: header
-    name: X-Key
-  keyPair:
-    type: apiKey
-    in: header
-    name: X-Key-Pair
 produces:
-  - application/json
+- application/json
 paths:
-  /insights/hasnlpresults/{audioId}:
+  /insights/langs:
     get:
-      summary: Determines if we have NLP results for a supplied audio file
-      description: |
-        Determines if we have NLP results for a supplied audio file
+      summary: Return a list of all supported languages
+      description: >-
+        Use this API to return list of all supported languages including the full name and device or speech language name. This is a GET operation.
       consumes:
-        - application/json
+      - application/json
       produces:
-        - application/json
-      parameters:
-        - in: path
-          name: audioId
-          required: true
-          type: string
-          description: The audio Id
-      security:
-        - keyPair: []
+      - application/json
       tags:
-        - Has NLP Results
+      - Langs
+      responses:
+        '200':
+          description: Good response
+          schema:
+            $ref: '#/definitions/LangsResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/LangsResponse'
+  /insights/UploadAudio:
+    post:
+      summary: Upload audio from your application
+      description: >-
+        Use this API to upload audio from your application for speech recognition with unparalleled accuracy as well as automated text analysis by natural language processing (NLP). This is a POST operation.
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - in: formData
+        name: uploadFile
+        type: string
+        format: binary
+        description:  >-
+          (required) Audio binary file, two formats are supported “WAV” and “FLAC”
+        required: true
+      - in: formData
+        name: deviceLanguage
+        type: string
+        description:  >-
+          (required) String, BCP-47 identifier, language code parameter for speech recognition. For best results use speechLang value defined by user. Device language should be used only if speechLang is not available from the user.
+        required: true
+      - in: formData
+        name: confidence
+        type: string
+        description: >-
+          (optional) String, minimum estimated speech-to-text confidence level that accepted for sending transcript to natural language processing, default is 0.90
+      - in: formData
+        name: merge
+        type: string
+        description: >-
+          (optional) String, “true” or “false” used to determine if all speech should be merged into single transcript, default is “true”
+      - in: formData
+        name: deviceLocation
+        type: string
+        description: >-
+          (optional) String, it will be available when the application has location permission
+      - in: formData
+        name: sampleRate
+        type: integer
+        format: int32
+        description: >-
+          (optional) Int32, sample rate (in Hertz) of the audio binary file
+      - in: formData
+        name: ruleTrimEnd
+        type: integer
+        format: int32
+        description: >-
+          (optional) Integer, value indicates a % * 1.5 to truncate the audio file, e.g. 1 will use 98.5% of original audio file, 2 = 3%, default is 0
+      tags:
+      - Upload Audio
+      responses:
+        '200':
+          description: Good response
+          schema:
+            $ref: '#/definitions/AudioResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/AudioResponse'
+  /insights/UploadTranscript:
+    post:
+      summary: Upload transcripts from your application
+      description: >-
+        Use this API to upload transcripts from your application for automated text analysis by natural language processing (NLP). This is a POST operation.
+      consumes:
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - in: formData
+        name: transcript
+        type: string
+        description: >-
+          (required) String, text for natural language processing
+        required: true
+      - in: formData
+        name: deviceLanguage
+        type: string
+        description: >-
+          (required) String, ISO-639-1 identifier, language code parameter for natural language processing.
+        required: true
+      tags:
+      - Upload Transcript
+      responses:
+        '200':
+          description: Good response
+          schema:
+            $ref: '#/definitions/TranscriptResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/TranscriptResponse'
+  /insights/UploadValues:
+    post:
+      summary: Upload values from your application
+      description: >-
+        Use this API to upload values from your application. This is a POST operation.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: >-
+          (required) Any [json data](https://www.json.org)
+          in standard format.
+        required: true
+        schema:
+          type: object
+      tags:
+      - Upload Values
+      responses:
+        '200':
+          description: Good response
+          schema:
+            $ref: '#/definitions/ValuesResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/ValuesResponse'
+  /insights/GetValues:
+    get:
+      summary: Retrieve values uploaded by your application
+      description: >-
+        Use this API to retrieve values uploaded by your application. This is a GET operation.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: valuesId
+        type: string
+        description: >-
+          (required) String, the valuesId, returned by Upload Values API.
+        required: true
+      tags:
+      - Get Values
+      responses:
+        '200':
+          description: Good response
+          schema:
+            $ref: '#/definitions/ValuesDocumentResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/ValuesDocumentResponse'
+  /insights/text:
+    get:
+      summary: Retrieve text for audio uploaded by your application
+      description: >-
+        Use this API to retrieve transcripts for audio uploaded by your application. The response includes speech recognition confidence values and sentiment values if there are NLP results. This is a GET operation. Optionally can provide a start and end date range to retrieve the response for a document corpus that have NLP results.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: audioId
+        type: string
+        description: >-
+          (optional) String, the audioId, returned by Upload Audio API, query parameter start and end will be ignored if audioId is presented.
+      - in: query
+        name: start
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC start time in millisecond, must not include audioId.
+      - in: query
+        name: end
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC end time in millisecond, must not include audioId.
+      tags:
+      - Text
+      responses:
+        '200':
+          description: Text Document
+          schema:
+            $ref: '#/definitions/TextDocumentResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/TextDocumentResponse'
+  '/insights/HasNLPResults/{audioId}':
+    get:
+      summary: Determine if an audio upload has NLP results
+      description: >-
+        Use this API to determine if transcribed audio has NLP results. This is a GET operation.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: path
+        name: audioId
+        required: true
+        type: string
+        description: The audio Id
+      tags:
+      - Has NLP Results
       responses:
         '200':
           description: BooleanResponse
@@ -45,128 +260,221 @@ paths:
             $ref: '#/definitions/BooleanResponse'
         '401':
           description: >-
-            Unauthorized, you have an invalid apikey or secret key. If you do
-            not use the SDK and calculate the signature by yourself make sure to
-            follow our signature authentication calculation guide.
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
         default:
           description: Default response
           schema:
             $ref: '#/definitions/BooleanResponse'
-
-  /insights/langs:
+  /insights/NLPResults:
     get:
-      summary: Return Supported Natural Voice Languages
-      description: |
-        Return Supported Natural Voice Languages including the full name and device or speech language name
-      consumes:
-        - application/json
+      summary: Retrieve text analysis for a document corpus
+      description: >-
+        Use this API to retrieve document sentiment, named entities, and syntax analysis after natural language processing (NLP). This is a GET  operation. Optionally can provide a start and end date range to retrieve the response for a document corpus that have NLP results.
       produces:
-        - application/json
-      security:
-        - keyPair: []
-      tags:
-        - GetNaturalVoiceLangs
-      responses:
-        '200':
-          description: Good response
-          schema:
-            $ref: '#/definitions/LangsResponse'
-        '401':
-          description: >-
-            Unauthorized, you have an invalid apikey or secret key. If you do
-            not use the SDK and calculate the signature by yourself make sure to
-            follow our signature authentication calculation guide.
-        default:
-          description: Default response
-          schema:
-            $ref: '#/definitions/LangsResponse'
-
-  /insights/UploadAudio:
-    post:
-      summary: Uploads audio file for analysis
-      description: |
-        Uploads audio file for analysis
-      consumes:
-        - multipart/form-data
-      produces:
-        - application/json
-      security:
-        - keyPair: []
+      - application/json
       parameters:
-        - in: formData
-          name: uploadFile
-          description: file to upload
-          required: true
-          type: file
-        - in: formData
-          name: deviceLanguage
-          type: string
-          description: Device language
-        - in: formData
-          name: confidence
-          type: number
-          format: float
-          description: (Optional) Minimum confidence level that should be accepted for creating transcript.
-        - in: formData
-          name: merge
-          type: boolean
-          description: (Optional). Can be "true" or "false" used to determine if all speech should be merged into single transcript
-        - in: formData
-          name: deviceLocation
-          type: string
-          description: Device Location, it's optional. it will be available as long as user's allow location permission for the application.
-        - in: formData
-          name: sampleRate
-          type: integer
-          format: int64
-          description: Sample rate of audio file
-        - in: formData
-          name: ruleTrimEnd
-          type: integer
-          format: int32
-          description: (Optional) if specified the rule value indicates a % * 1.5 to truncate the audio file, e.g. 1 will use 98.5% of original audio file, 2 = 3%, etc.
+      - in: query
+        name: audioId
+        type: string
+        description: >-
+          (optional) String, the audioId, returned by Upload Audio API, query parameter start and end will be ignored if audioId is presented.
+      - in: query
+        name: start
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC start time in millisecond, must not include audioId.
+      - in: query
+        name: end
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC end time in millisecond, must not include audioId.
       tags:
-        - UploadAudio
+      - NLP Results
+      responses:
+        '200':
+          description: NLPDocumentResponse
+          schema:
+            $ref: '#/definitions/NLPDocumentResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+  '/insights/sentibot/{audioId}':
+    get:
+      summary: Sentiment classification for bot applications
+      description: >-
+        Use this API to find out if the sentiment classifications (ClearlyPositive, ClearlyNegative, NeutralMixed, AlertManager) are TRUE or FALSE for a given audioId that has NLP results. Bots can be programmed to use Sentibot classifications for improved conversational design. This is a GET operation.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      tags:
+      - Sentibot
+      parameters:
+      - in: path
+        name: audioId
+        type: string
+        description: >-
+          (required) String, the audioId, returned by Upload Audio API.
+        required: true
       responses:
         '200':
           description: Good response
           schema:
-            $ref: '#/definitions/UploadAudioResponse'
+            $ref: '#/definitions/SentibotResponse'
         '401':
           description: >-
-            Unauthorized, you have an invalid apikey or secret key. If you do
-            not use the SDK and calculate the signature by yourself make sure to
-            follow our signature authentication calculation guide.
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
         default:
           description: Default response
           schema:
-            $ref: '#/definitions/BaseResponse'
-
+            $ref: '#/definitions/SentibotResponse'
+  /insights/nss:
+    get:
+      summary: Calculate the Net Sentiment Score
+      description: >-
+        Use this API to calculate NSS. This is a GET operation. Optionally can provide a start and end date range to retrieve the response for a document corpus that have NLP results.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: audioId
+        type: string
+        description: >-
+          (optional) String, the audioId, returned by Upload Audio API, query parameter start and end will be ignored if audioId is presented.
+      - in: query
+        name: start
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC start time in millisecond, must not include audioId.
+      - in: query
+        name: end
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC end time in millisecond, must not include audioId.
+      tags:
+      - NSS
+      responses:
+        '200':
+          description: NSS
+          schema:
+            $ref: '#/definitions/NSSResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        default:
+          description: NSS response
+          schema:
+            $ref: '#/definitions/NSSResponse'
+  /insights/ess:
+    get:
+      summary: Calculate the Entity Sentiment Score
+      description: >-
+        Use this API to calculate ESS. This is a GET operation. Optionally can provide a start and end date range to retrieve the response for a document corpus that have NLP results.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: query
+        name: saliencevalue
+        type: number
+        format: float
+        description: >-
+          (required) Floating point number, 0 is the recommended value, 1 and 2 are also accepted, value indicates the salience factor applied in the calculation of ESS weights.
+        required: true
+      - in: query
+        name: start
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC start time in millisecond, must not include audioId.
+      - in: query
+        name: end
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC end time in millisecond, must not include audioId.
+      tags:
+      - ESS
+      responses:
+        '200':
+          description: ESS
+          schema:
+            $ref: '#/definitions/ESSResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        default:
+          description: Default response
+          schema:
+            $ref: '#/definitions/ESSResponse'
+  /insights/categories:
+    get:
+      summary: Retrieve content categories for audio uploads
+      description: >-
+        Use this API to query Natural Voice to find the content categories for a provided audio ID. This is a GET operation. Optionally can provide a start and end date range to retrieve the response for a document corpus that have NLP results.
+      parameters:
+      - in: query
+        name: audioId
+        type: string
+        description: >-
+          (optional) String, the audioId, returned by Upload Audio API, query parameter start and end will be ignored if audioId is presented.
+      - in: query
+        name: start
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC start time in millisecond, must not include audioId.
+      - in: query
+        name: end
+        type: integer
+        format: int64
+        description: >-
+          (optional) UTC end time in millisecond, must not include audioId.
+      tags:
+      - Categories
+      responses:
+        '200':
+          description: Category Response
+          schema:
+            $ref: '#/definitions/CategoryResponse'
+        '401':
+          description: >-
+            Unauthorized, you have an invalid apikey or secret key. If you do not use the SDK and calculate the signature by yourself make sure to follow our signature authentication calculation guide.
+        '403':
+          description: Forbidden, you don't have permission.
+        default:
+          description: Default category response
+          schema:
+            $ref: '#/definitions/CategoryResponse'
   /insights/GeometryImport:
     post:
-      summary: Import vector geographical geometries
-      description: >
-        The POST operation to store the vector geometries of GeoJSON format on Place Next services.
-        The imported geometries will be used within our service such as map services and discovery services.
-        The imported Geometries data must be a 2D [standard GeoJSON](https://geojson.org/geojson-spec.html),
-        the altitude is currently not supported by our service at moments.
+      summary: Import vector geographic geometries
+      description: >-
+        Use this API to import vector geographic geometries. This is a POST operation. The imported geometries will be used within our services such as free map and location lists. The imported geometries data must be a 2D [standard GeoJSON](https://geojson.org/geojson-spec.html). Altitude is not supported by our services.
       consumes:
-        - application/geo+json
+      - application/geo+json
       produces:
-        - application/json
-      security:
-        - keyPair: []
+      - application/json
       parameters:
-        - in: body
-          name: body
-          description: >
-            A [geometry collection](https://geojson.org/geojson-spec.html#geometrycollection) standard format and
-            the request must specified content type as *application/geo+json*,
-          required: true
-          schema:
-            $ref: '#/definitions/GeometryCollection'
+      - in: body
+        name: body
+        description: >-
+          A [geometry
+          collection](https://geojson.org/geojson-spec.html#geometrycollection)
+          standard format and the request must specified content type as
+          *application/geo+json*
+        required: true
+        schema:
+          $ref: '#/definitions/GeometryCollection'
       tags:
-        - Geometry Import
+      - Geometry Import
       responses:
         '200':
           description: Geometries successfully imported
@@ -176,339 +484,49 @@ paths:
               description: Id of imported geometry
               type: string
         default:
-          description: More information please visit [error codes](/apis/error)
+          description: 'For more information please visit [error codes](/apis/error)'
           schema:
             $ref: '#/definitions/Response'
-  /insights/sentibot:
-        get:
-          summary: Sentiment analysis
-          description: |
-            Returns the sentiment analysis for a supplied audio id
-          consumes:
-            - application/json
-          produces:
-            - application/json
-          tags:
-            - Sentibot
-          parameters:
-            - in: path
-              name: audioId
-              required: true
-              schema:
-              type: string
-              description: the audio id representing the audio to be analyzed
-          responses:
-            '200':
-              description: Good response
-              schema:
-                $ref: '#/definitions/SentibotResponse'
-            '401':
-              description: >-
-                Unauthorized, you have an invalid apikey or secret key. If you do
-                not use the SDK and calculate the signature by yourself make sure to
-                follow our signature authentication calculation guide.
-            default:
-              description: Default response
-              schema:
-                $ref: '#/definitions/SentibotResponse'
-  /insights/NLPResults:
-      get:
-        summary: Query Natural Voice for text analysis results
-        description: |
-          Developers use the NLPResults API to query Natural Voice to retrieve document sentiment, named entities, and syntax analysis after natural language processing (NLP). Optionally can provide a start and end date range to retrieve the results from a corpus of Natural Voice sessions.
-        produces:
-          - application/json
-        parameters:
-          - in: query
-            name: audioId
-            type: string
-            description: (required, except when start and end params are provided) String, the audioId for a Natural Voice session, returned by UploadAudio API
-          - in: query
-            name: start
-            type: integer
-            format: int64
-            description: (optional) UTC start time in millisecond, must not include audio ID
-          - in: query
-            name: end
-            type: integer
-            format: int64
-            description: (optional) UTC end time in millisecond, must not include audio ID
-        tags:
-          - NLP Results
-        responses:
-          '200':
-            description: NLPDocumentResponse
-            schema:
-              $ref: '#/definitions/NLPDocumentResponse'
-          '401':
-            description: >-
-              Unauthorized, you have an invalid apikey or secret key. If you do
-              not use the SDK and calculate the signature by yourself make sure to
-              follow our signature authentication calculation guide.
-  /insights/UploadTranscript:
-      post:
-        summary: Upload transcripts to Natural Voice
-        description: |
-          Developers use the Upload Transcript API to upload transcripts to Natural Voice for automated text analysis by natural language processing (NLP).
-        consumes:
-          - multipart/form-data
-        produces:
-          - application/json
-        parameters:
-          - in: formData
-            name: transcript
-            description: (required) String, text for natural language processing
-            required: true
-            type: string
-          - in: formData
-            name: deviceLanguage
-            type: string
-            description: String, BCP-47 identifier, language code parameter for speech-to-text recognition, for best results use speechLang value defined by user, use device language only if speechLang is not available from the user
-        tags:
-          - Upload Transcript
-        responses:
-          '200':
-            description: Good response
-            schema:
-              $ref: '#/definitions/TranscriptResponse'
-          '401':
-            description: >-
-              Unauthorized, you have an invalid apikey or secret key. If you do
-              not use the SDK and calculate the signature by yourself make sure to
-              follow our signature authentication calculation guide.
-          default:
-            description: Default response
-            schema:
-              $ref: '#/definitions/TranscriptResponse'
-  /insights/categories:
-    get:
-      summary: Natural Voice Categories Summary
-      description: |
-        Returns Natural Voice Categories Summary given an optional start and end date
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      security:
-        - keyPair: []
-      parameters:
-        - in: query
-          name: audioId
+definitions:
+  AudioResponse:
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        audioId:
           type: string
-          description: The audio id
-        - in: query
-          name: start
-          type: integer
-          format: int64
-          description: Start date of query
-        - in: query
-          name: end
-          type: integer
-          format: int64
-          description: End date of query
-      tags:
-        - Insights Categories
-      responses:
-        '200':
-          description: Natural Voice Categories Summary
-          schema:
-            $ref: '#/definitions/CategoryResponse'
-        '401':
-          description: >-
-            Unauthorized, you have an invalid apikey or secret key. If you do
-            not use the SDK and calculate the signature by yourself make sure to
-            follow our signature authentication calculation guide.
-        '403':
-          description: 'Forbidden, you don''t have permission to import the data.'
-        default:
-          description: Default category response
-          schema:
-            $ref: '#/definitions/CategoryResponse'
-  /insights/nss:
-    get:
-      summary: Retrieve NSS Score
-      description: Retrieve NSS Score, can optionally specifify a start and end date
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      security:
-        - keyPair: []
-      parameters:
-        - in: query
-          name: start
-          type: integer
-          format: int64
-          description: Start date of query
-        - in: query
-          name: end
-          type: integer
-          format: int64
-          description: End date of query
-        - in: query
-          name: audioId
-          type: string
-          description: The audio id
-      tags:
-        - NSS Score
-      responses:
-        '200':
-          description: NSS Score
-          schema:
-            $ref: '#/definitions/NSSResponse'
-        '401':
-          description: >-
-            Unauthorized, you have an invalid apikey or secret key. If you do
-            not use the SDK and calculate the signature by yourself make sure to
-            follow our signature authentication calculation guide.
-        default:
-          description: NSS response
-          schema:
-            $ref: '#/definitions/NSSResponse'
-  /insights/ess:
-    get:
-      summary: Retrieve ESS Score
-      description: |
-        Retrieve ESS Score, can optionally provide a start and end date
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      security:
-        - keyPair: []
-      parameters:
-        - in: query
-          name: start
-          type: integer
-          format: int64
-          description: Start date of query
-        - in: query
-          name: end
-          type: integer
-          format: int64
-          description: End date of query
-        - in: query
-          name: saliencevalue
+          description: the audioId of transcript that was uploaded
+        confidence:
           type: number
           format: float
-          description: user salience value
-      tags:
-        - ESS Score
-      responses:
-        '200':
-          description: ESS Score
-          schema:
-            $ref: '#/definitions/ESSResponse'
-        '401':
-          description: >-
-            Unauthorized, you have an invalid apikey or secret key. If you do
-            not use the SDK and calculate the signature by yourself make sure to
-            follow our signature authentication calculation guide.
-        default:
-          description: Default response
-          schema:
-            $ref: '#/definitions/ESSResponse'
-  /insights/text:
-    get:
-      summary: Retrieve Text
-      description: |
-        Retrieve transcripts and confidence values, optionally can provide a given start and end date range
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      security:
-        - keyPair: []
-      parameters:
-        - in: query
-          name: audioId
-          type: string
-          description: The audio id
-        - in: query
-          name: start
-          type: integer
-          format: int64
-          description: Start date of query
-        - in: query
-          name: end
-          type: integer
-          format: int64
-          description: End date of query
-      tags:
-        - TextDocument
-      responses:
-        '200':
-          description: TextDocument
-          schema:
-            $ref: '#/definitions/TextDocumentResponse'
-        '401':
-          description: >-
-            Unauthorized, you have an invalid apikey or secret key. If you do
-            not use the SDK and calculate the signature by yourself make sure to
-            follow our signature authentication calculation guide.
-        default:
-          description: Default response
-          schema:
-            $ref: '#/definitions/TextDocumentResponse'
-definitions:
+          description: the confidence of the analysis of the transcript
   Geometry:
     type: object
     description: GeoJSon geometry
     discriminator: type
     required:
-      - type
+    - type
     externalDocs:
       url: 'http://geojson.org/geojson-spec.html#geometry-objects'
     properties:
       type:
         type: string
         enum:
-          - Point
-          - Polygon
+        - Point
+        - Polygon
         description: the geometry type
-  Point2D:
-    type: array
-    maxItems: 2
-    minItems: 2
-    items:
-      type: number
-  Point:
-    type: object
-    description: GeoJSon geometry
-    externalDocs:
-      url: 'http://geojson.org/geojson-spec.html#id2'
-    allOf:
-      - $ref: '#/definitions/Geometry'
-      - properties:
-          coordinates:
-            $ref: '#/definitions/Point2D'
-  Polygon:
-    type: object
-    description: GeoJSon geometry
-    externalDocs:
-      url: 'http://geojson.org/geojson-spec.html#id4'
-    allOf:
-      - $ref: '#/definitions/Geometry'
-      - properties:
-          coordinates:
-            type: array
-            items:
-              type: array
-              items:
-                $ref: '#/definitions/Point2D'
   GeometryCollection:
     type: object
     description: GeoJSon geometry collection
     required:
-      - type
-      - geometries
+    - type
+    - geometries
     externalDocs:
       url: 'http://geojson.org/geojson-spec.html#geometrycollection'
     properties:
       type:
         type: string
         enum:
-          - GeometryCollection
+        - GeometryCollection
       geometries:
         type: array
         items:
@@ -523,50 +541,17 @@ definitions:
         type: string
       requestId:
         type: string
-  LangsResponse:
-      allOf:
-        - $ref: '#/definitions/BaseResponse'
-        - properties:
-            lang:
-              type: array
-              items:
-                $ref: '#/definitions/Lang'
-  Lang:
-    type: object
-    properties:
-      name:
-        type: string
-      fullname:
-        type: string
-      speechlang:
-        type: string
-      nlplang:
-        type: string
-  
-  UploadAudioResponse:
-    type: object
-    properties:
-      status:
-        $ref: '#/definitions/BaseResponse'
-      data:
-        type: object
-        properties:
-          audioid:
-            type: string
-          confidence:
-            type: number
-            format: float
-
   CategoryResponse:
     allOf:
-      - $ref: '#/definitions/BaseResponse'
-      - properties:
-          account:
-            $ref: '#/definitions/Account'
-          numtexts:
-            type: integer
-          records:
-            type: array
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        account:
+          $ref: '#/definitions/Account'
+        numtexts:
+          type: integer
+        records:
+          type: array
+          items:
             $ref: '#/definitions/Record'
   Record:
     type: object
@@ -603,24 +588,24 @@ definitions:
         type: string
   BooleanResponse:
     allOf:
-      - $ref: '#/definitions/BaseResponse'
-      - properties:
-          value:
-            type: boolean
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        value:
+          type: boolean
   NSSResponse:
     allOf:
-      - $ref: '#/definitions/BaseResponse'
-      - properties:
-          score:
-            type: integer
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        score:
+          type: integer
   ESSResponse:
-      allOf:
-        - $ref: '#/definitions/BaseResponse'
-        - properties:
-            essData:
-              type: array
-              items:
-                $ref: '#/definitions/ESSData'
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        essData:
+          type: array
+          items:
+            $ref: '#/definitions/ESSData'
   ESSData:
     type: object
     properties:
@@ -629,69 +614,70 @@ definitions:
         format: float
       name:
         type: string
-  SentibotResponse:
-        allOf:
-          - $ref: '#/definitions/BaseResponse'
-          - properties:
-              sentibotData:
-                type: array
-                items:
-                  $ref: '#/definitions/SentibotData'
-  SentibotData:
-      type: object
-      properties:
-        value:
-          type: boolean
-        name:
-          type: string
-  TranscriptResponse:
-      allOf:
-        - $ref: '#/definitions/BaseResponse'
-        - properties:
-            transcriptId:
-              type: string
-              description: the transcriptId for a Natural Voice session
+  NLPDocumentResponse:
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        nlpData:
+          type: array
+          items:
+            $ref: '#/definitions/NlpData'
+  NlpData:
+    type: object
+    properties:
+      audioId:
+        type: string
+      sentiment:
+        type: object
+        description: >-
+          https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeSentimentResponse
+      syntax:
+        type: object
+        description: >-
+          https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeSyntaxResponse
+      entities:
+        type: object
+        description: >-
+          https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeEntitiesResponse
   TextDocumentResponse:
     allOf:
-      - $ref: '#/definitions/BaseResponse'
-      - properties:
-          transcriptData:
-            type: array
-            items:
-              $ref: '#/definitions/TranscriptData'
-  NLPDocumentResponse:
-      allOf:
-        - $ref: '#/definitions/BaseResponse'
-        - properties:
-            NLPData:
-              type: array
-              items:
-                $ref: '#/definitions/NLPData'
-  NLPData:
-      type: object
-      properties:
-        audioId:
-          type: string
-        sentiment:
-          type: AnalyzeSentimentResponse
-          description: https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeSentimentResponse
-        syntax:
-          type: AnalyzeSyntaxResponse
-          description: https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeSyntaxResponse
-        entities:
-          type: AnalyzeEntitiesResponse
-          description: https://godoc.org/google.golang.org/genproto/googleapis/cloud/language/v1#AnalyzeEntitiesResponse
-
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        transcriptData:
+          type: array
+          items:
+            $ref: '#/definitions/TranscriptData'
   TranscriptData:
-      type: object
-      properties:
-        confidence:
-          type: number
-          format: float
-        transcript:
+    type: object
+    properties:
+      confidence:
+        type: number
+        format: float
+      transcript:
+        type: string
+      sentimentType:
+        $ref: '#/definitions/SentimentType'
+  TranscriptResponse:
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        transcriptId:
           type: string
-        sentimentType:
-          $ref: '#/definitions/SentimentType'
+          description: the transcriptId of transcript that was uploaded
+  ValuesResponse:
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        valuesId:
+          type: string
+          description: the ValuesId of the value that was uploaded
+  ValuesDocumentResponse:
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        values:
+          type: object
+          description: The json data object that was uploaded and stored
   SentimentType:
     type: object
     properties:
@@ -701,3 +687,37 @@ definitions:
       magnitude:
         type: number
         format: float
+  LangsResponse:
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        langs:
+          type: array
+          items:
+            $ref: '#/definitions/Lang'
+  Lang:
+    type: object
+    properties:
+      name:
+        type: string
+      fullname:
+        type: string
+      speechlang:
+        type: string
+      nlplang:
+        type: string
+  SentibotResponse:
+    allOf:
+    - $ref: '#/definitions/BaseResponse'
+    - properties:
+        sentiment:
+          type: array
+          items:
+            $ref: '#/definitions/SentimentScript'
+  SentimentScript:
+    type: object
+    properties:
+      name:
+        type: string
+      value:
+        type: string

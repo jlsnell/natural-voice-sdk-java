@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class NSSScoreApiTest extends BaseTest {
 
-    private final NSSScoreApi api = new NSSScoreApi();
+    private final NSSApi api = new NSSApi();
 
     /**
      * Retrieve NSS Score
@@ -46,7 +46,7 @@ public class NSSScoreApiTest extends BaseTest {
         Long start = null;
         Long end = null;
         String audioId = null;
-        ApiResponse<NSSResponse> res = api.insightsNssGetWithHttpInfo(start, end, audioId);
+        ApiResponse<NSSResponse> res = api.insightsNssGetWithHttpInfo(audioId,start, end);
         Assert.assertEquals("status", 200, res.getStatusCode());
     }
     

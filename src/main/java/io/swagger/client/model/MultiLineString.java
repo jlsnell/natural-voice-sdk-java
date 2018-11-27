@@ -31,7 +31,7 @@ import java.util.List;
  * GeoJSon geometry
  */
 @ApiModel(description = "GeoJSon geometry")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-06-21T12:12:42.454-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-26T21:43:29.607-07:00")
 public class MultiLineString extends Geometry {
   @SerializedName("coordinates")
   private List<List<Point2D>> coordinates = null;

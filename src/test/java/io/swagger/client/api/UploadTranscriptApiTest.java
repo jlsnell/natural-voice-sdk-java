@@ -46,7 +46,7 @@ public class UploadTranscriptApiTest extends BaseTest {
     public void insightsUploadTranscriptPostTest() throws ApiException {
         setup(api.getApiClient());
         String transcript = "this is a test of the nlp processing it is a good great happy good test";
-        String deviceLanguage = null;
+        String deviceLanguage = "en-us";
         /*TranscriptResponse res = api.insightsUploadTranscriptPost(transcript, deviceLanguage);
 
         Assert.assertEquals("status", 200, res.getCode().intValue());*/

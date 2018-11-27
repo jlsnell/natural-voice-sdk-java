@@ -33,7 +33,7 @@ import java.util.Map;
 
 public class GetNaturalVoiceLangsApiTest extends BaseTest {
 
-    private final GetNaturalVoiceLangsApi api = new GetNaturalVoiceLangsApi();
+    private final LangsApi api = new LangsApi();
 
     
     /**
@@ -51,7 +51,7 @@ public class GetNaturalVoiceLangsApiTest extends BaseTest {
         ApiResponse<LangsResponse> res = api.insightsLangsGetWithHttpInfo();
 
         Assert.assertEquals("status", 200, res.getStatusCode());
-        Assert.assertEquals("langs size", 45, res.getData().getLang().size());
+        Assert.assertEquals("langs size", 45, res.getData().getLangs().size());
     }
     
 }

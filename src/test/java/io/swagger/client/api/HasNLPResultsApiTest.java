@@ -46,7 +46,7 @@ public class HasNLPResultsApiTest extends BaseTest {
     public void insightsHasNLPResultsAudioIdGetTest() throws ApiException {
         setup(api.getApiClient());
         String audioId = getAudioId();
-        ApiResponse<BooleanResponse> res = api.insightsHasnlpresultsAudioIdGetWithHttpInfo(audioId);
+        ApiResponse<BooleanResponse> res = api.insightsHasNLPResultsAudioIdGetWithHttpInfo(audioId);
 
         Assert.assertEquals("status", 200, res.getStatusCode());
     }

@@ -30,7 +30,7 @@ import java.util.Map;
  */
 public class ESSScoreApiTest extends BaseTest {
 
-    private final ESSScoreApi api = new ESSScoreApi();
+    private final ESSApi api = new ESSApi();
 
     /**
      * Retrieve ESS Score
@@ -46,7 +46,7 @@ public class ESSScoreApiTest extends BaseTest {
         Long start = null;
         Long end = null;
         Float saliencevalue = null;
-        ApiResponse<ESSResponse> res = api.insightsEssGetWithHttpInfo(start, end, saliencevalue);
+        ApiResponse<ESSResponse> res = api.insightsEssGetWithHttpInfo(saliencevalue,start, end);
         Assert.assertEquals("status", 200, res.getStatusCode());
     }
     

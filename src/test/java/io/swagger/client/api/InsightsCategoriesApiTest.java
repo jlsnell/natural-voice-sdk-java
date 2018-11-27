@@ -26,7 +26,7 @@ import java.util.GregorianCalendar;
  */
 public class InsightsCategoriesApiTest extends BaseTest {
 
-    private final InsightsCategoriesApi api = new InsightsCategoriesApi();
+    private final CategoriesApi api = new CategoriesApi();
 
     /**
      * Retrieve NSS Categories Summary

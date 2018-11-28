@@ -45,7 +45,7 @@ public class ESSScoreApiTest extends BaseTest {
         setup(api.getApiClient());
         Long start = null;
         Long end = null;
-        Float saliencevalue = null;
+        Float saliencevalue = 0.9f;
         ApiResponse<ESSResponse> res = api.insightsEssGetWithHttpInfo(saliencevalue,start, end);
         Assert.assertEquals("status", 200, res.getStatusCode());
     }

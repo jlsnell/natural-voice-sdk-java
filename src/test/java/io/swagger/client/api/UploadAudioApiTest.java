@@ -47,27 +47,16 @@ public class UploadAudioApiTest extends BaseTest {
 
         ClassLoader classLoader = getClass().getClassLoader();
         File uploadFile = new File(classLoader.getResource("outfile.wav").getFile());
-        byte[] uploadFileData = {};
-        try {
-            uploadFileData = Files.readAllBytes(uploadFile.toPath());
-        }catch(IOException e){
 
-        }
-        /*String deviceLanguage = "en_US";
-        Float confidence = 0.84f;
-        boolean merge = false;
-        String deviceLocation = null;
-        Long sampleRate = 44100L;
-        Integer ruleTrimEnd = null;*/
-
-        String deviceLanguage = null;
-        String confidence = "0.9";
+        String deviceLanguage = "en_US";
+        String confidence = "0.84f";
         String merge = "true";
         String deviceLocation = null;
         Integer sampleRate = null;
         Integer ruleTrimEnd = null;
 
-        ApiResponse<AudioResponse> res = api.insightsUploadAudioPostWithHttpInfo(uploadFileData, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd);
+
+        ApiResponse<AudioResponse> res = api.insightsUploadAudioPostWithHttpInfo(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd);
         Assert.assertEquals("status", 200, res.getStatusCode());
         AudioResponse body = res.getData();
     }

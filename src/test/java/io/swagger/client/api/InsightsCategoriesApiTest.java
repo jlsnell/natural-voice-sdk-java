@@ -41,7 +41,7 @@ public class InsightsCategoriesApiTest extends BaseTest {
         setup(api.getApiClient());
         Long start = new GregorianCalendar(2018, 1, 1).getTimeInMillis();
         Long end = System.currentTimeMillis();
-        ApiResponse<CategoryResponse> res = api.insightsCategoriesGetWithHttpInfo(getAudioId(), start, end);
+        ApiResponse<CategoryResponse> res = api.insightsCategoriesGetWithHttpInfo("pkyL6OqSGZQYaxWEZkg", start, end);
         Assert.assertEquals("status", 200, res.getStatusCode());
         // TODO: test validations
     }

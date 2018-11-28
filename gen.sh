@@ -22,4 +22,4 @@ rm Point.java
 rm Polygon.java
 
 echo "Clean up generated folder"
-#rm -rf target
+rm -rf target

@@ -28,6 +28,7 @@ import java.io.IOException;
 
 
 import io.swagger.client.model.AudioResponse;
+import java.io.File;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public class UploadAudioApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call insightsUploadAudioPostCall(byte[] uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call insightsUploadAudioPostCall(File uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
@@ -123,7 +124,7 @@ public class UploadAudioApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call insightsUploadAudioPostValidateBeforeCall(byte[] uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call insightsUploadAudioPostValidateBeforeCall(File uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'uploadFile' is set
         if (uploadFile == null) {
@@ -158,7 +159,7 @@ public class UploadAudioApi {
      * @return AudioResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public AudioResponse insightsUploadAudioPost(byte[] uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd) throws ApiException {
+    public AudioResponse insightsUploadAudioPost(File uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd) throws ApiException {
         ApiResponse<AudioResponse> resp = insightsUploadAudioPostWithHttpInfo(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd);
         return resp.getData();
     }
@@ -176,7 +177,7 @@ public class UploadAudioApi {
      * @return ApiResponse&lt;AudioResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<AudioResponse> insightsUploadAudioPostWithHttpInfo(byte[] uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd) throws ApiException {
+    public ApiResponse<AudioResponse> insightsUploadAudioPostWithHttpInfo(File uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd) throws ApiException {
         com.squareup.okhttp.Call call = insightsUploadAudioPostValidateBeforeCall(uploadFile, deviceLanguage, confidence, merge, deviceLocation, sampleRate, ruleTrimEnd, null, null);
         Type localVarReturnType = new TypeToken<AudioResponse>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -196,7 +197,7 @@ public class UploadAudioApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call insightsUploadAudioPostAsync(byte[] uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd, final ApiCallback<AudioResponse> callback) throws ApiException {
+    public com.squareup.okhttp.Call insightsUploadAudioPostAsync(File uploadFile, String deviceLanguage, String confidence, String merge, String deviceLocation, Integer sampleRate, Integer ruleTrimEnd, final ApiCallback<AudioResponse> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;

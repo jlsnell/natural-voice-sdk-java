@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * LangsResponse
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-26T21:43:31.240-07:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-11-27T14:31:21.016-07:00")
 public class LangsResponse {
   @SerializedName("code")
   private Integer code = null;
@@ -38,8 +38,8 @@ public class LangsResponse {
   @SerializedName("message")
   private String message = null;
 
-  @SerializedName("langs")
-  private List<Lang> langs = null;
+  @SerializedName("lang")
+  private List<Lang> lang = null;
 
   public LangsResponse code(Integer code) {
     this.code = code;
@@ -77,30 +77,30 @@ public class LangsResponse {
     this.message = message;
   }
 
-  public LangsResponse langs(List<Lang> langs) {
-    this.langs = langs;
+  public LangsResponse lang(List<Lang> lang) {
+    this.lang = lang;
     return this;
   }
 
-  public LangsResponse addLangsItem(Lang langsItem) {
-    if (this.langs == null) {
-      this.langs = new ArrayList<Lang>();
+  public LangsResponse addLangItem(Lang langItem) {
+    if (this.lang == null) {
+      this.lang = new ArrayList<Lang>();
     }
-    this.langs.add(langsItem);
+    this.lang.add(langItem);
     return this;
   }
 
    /**
-   * Get langs
-   * @return langs
+   * Get lang
+   * @return lang
   **/
   @ApiModelProperty(value = "")
-  public List<Lang> getLangs() {
-    return langs;
+  public List<Lang> getLang() {
+    return lang;
   }
 
-  public void setLangs(List<Lang> langs) {
-    this.langs = langs;
+  public void setLang(List<Lang> lang) {
+    this.lang = lang;
   }
 
 
@@ -115,12 +115,12 @@ public class LangsResponse {
     LangsResponse langsResponse = (LangsResponse) o;
     return Objects.equals(this.code, langsResponse.code) &&
         Objects.equals(this.message, langsResponse.message) &&
-        Objects.equals(this.langs, langsResponse.langs);
+        Objects.equals(this.lang, langsResponse.lang);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, message, langs);
+    return Objects.hash(code, message, lang);
   }
 
 
@@ -131,7 +131,7 @@ public class LangsResponse {
     
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
-    sb.append("    langs: ").append(toIndentedString(langs)).append("\n");
+    sb.append("    lang: ").append(toIndentedString(lang)).append("\n");
     sb.append("}");
     return sb.toString();
   }

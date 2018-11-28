@@ -45,8 +45,7 @@ paths:
       parameters:
       - in: formData
         name: uploadFile
-        type: string
-        format: binary
+        type: file
         description:  >-
           (required) Audio binary file, two formats are supported “WAV” and “FLAC”
         required: true
@@ -691,7 +690,7 @@ definitions:
     allOf:
     - $ref: '#/definitions/BaseResponse'
     - properties:
-        langs:
+        lang:
           type: array
           items:
             $ref: '#/definitions/Lang'
